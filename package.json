@@ -1,12 +1,12 @@
 {
-  "name": "react-native-store",
+  "name": "react-native-fs-store",
   "description": "FS Based store implementation for react native",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Bhanu P Chaudhary",
   "bugs": {
-    "url": "https://github.com/bhanuc/react-native-store/issues"
+    "url": "https://github.com/bhanuc/react-native-fs-store/issues"
   },
-  "homepage": "https://github.com/bhanuc/react-native-store",
+  "homepage": "https://github.com/bhanuc/react-native-fs-store",
   "keywords": [
     "awesome",
     "component",
@@ -18,7 +18,7 @@
   "main": "Store.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bhanuc/react-native-store.git"
+    "url": "https://github.com/bhanuc/react-native-fs-store.git"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.24.1",

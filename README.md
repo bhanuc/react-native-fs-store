@@ -1,5 +1,5 @@
-# react-native-store
-React Native store
+# react-native-fs-store
+React Native FS Based store
 
 # Benefits
 - Stores data in FileSystem, no more stuck promises in development
@@ -8,14 +8,14 @@ React Native store
 # Installation process
 
 ## Need to install react-native-fs
-`npm i react-native-fs react-native-store`
+`npm i react-native-fs react-native-fs-store`
 
 `react-native link react-native-fs`
 
 
 # Usage
 ```javascript
-import Store from "./Store";
+import Store from "react-native-fs-store";
 
 const Storage = new Store('default', false);
 
