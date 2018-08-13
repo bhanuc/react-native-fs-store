@@ -2,17 +2,22 @@ const RNFS = require('react-native-fs');
 const merge = require('lodash.merge');
 
 class Store {
-  constructor(name, cache) {
+  constructor(name) {
     this.name = name;
-    this.cache = cache;
+    this.initDone = false;
     this.fileName = `${RNFS.DocumentDirectoryPath}/${this.name}.rnjs`;
   }
+
   async init() {
+    if (this.initDone) {
+      return;
+    }
     try {
       const file = await RNFS.exists(this.fileName);
       if (file) {
         return;
       }
+      this.initDone = true;
       return RNFS.writeFile(this.fileName, '{}');
     } catch (error) {
       console.log('error in init', error);
@@ -20,6 +25,7 @@ class Store {
   }
 
   async getItem(key) {
+    await this.init();
     try {
       const file = await RNFS.readFile(this.fileName);
       const items = JSON.parse(file);
@@ -29,6 +35,7 @@ class Store {
     }
   }
   async setItem(key, value) {
+    await this.init();
     try {
       const file = await RNFS.readFile(this.fileName);
       const items = JSON.parse(file);
@@ -39,6 +46,7 @@ class Store {
     }
   }
   async removeItem(key) {
+    await this.init();
     try {
       const file = await RNFS.readFile(this.fileName);
       const items = JSON.parse(file);
@@ -49,6 +57,7 @@ class Store {
     }
   }
   async mergeItem(key, value) {
+    await this.init();
     try {
       const file = await RNFS.readFile(this.fileName);
       const items = JSON.parse(file);
@@ -59,6 +68,7 @@ class Store {
     }
   }
   async clear() {
+    await this.init();
     try {
       return RNFS.writeFile(this.fileName, '{}');
     } catch (error) {
@@ -66,6 +76,7 @@ class Store {
     }
   }
   async multiGet(keys, cb) {
+    await this.init();
     if (!Array.isArray(keys)) {
       console.log('input to multiGet is not an array.');
       return;
@@ -86,6 +97,7 @@ class Store {
     }
   }
   async multiSet(pairs) {
+    await this.init();
     if (!Array.isArray(pairs)) {
       console.log('input to multiGet is not an array.');
       return;
@@ -105,6 +117,7 @@ class Store {
   }
 
   async multiRemove(keys) {
+    await this.init();
     if (!Array.isArray(keys)) {
       console.log('input to multiGet is not an array.');
       return;
@@ -121,6 +134,7 @@ class Store {
     }
   }
   async multiMerge(pairs) {
+    await this.init();
     if (!Array.isArray(pairs)) {
       console.log('input to multiGet is not an array.');
       return;

@@ -17,7 +17,7 @@ React Native FS Based store
 ```javascript
 import Store from "react-native-fs-store";
 
-const Storage = new Store('default', false);
+const Storage = new Store('default');
 
 await Storage.setItem('unique_key', JSObject);
 // You can use almost all methods available in AsyncStorage with same signature.
@@ -26,6 +26,26 @@ await Storage.setItem('unique_key', JSObject);
 const JSObject = await Storage.getItem('unique_key');
 ```
 
+# Drop-In-Usage
+
+Replace-
+```javascript
+import { AsyncStorage } from "react-native";
+```
+with
+```javascript
+import Store from "react-native-fs-store";
+const AsyncStorage = new Store('default');
+```
+
+You now use it exactly as you would use AsyncStorage.
+```javascript
+await AsyncStorage.setItem('unique_key', JSObject);
+// You can use all methods available in AsyncStorage with same signature.
+
+...
+const JSObject = await Storage.getItem('unique_key');
+```
 
 # Methods implemented
 ```
@@ -45,4 +65,9 @@ multiMerge
 
 # Why is this needed, where will this go.
 Well the need of the package comes from the current state of async-storage, which sometimes break in performance, there are no known fixes for the same, hence I wrote a simple fs based key store system.
-This can be also be used to store encrypted contents as well provide a development fallback over async-storage.
+This can be also be used to store encrypted contents as well provide a development fallback over async-storage, but all of them would be implemented separately.
+
+
+# What are the limitations.
+Simulataneous operations are not yet supported, you should use multi- methods for the time being.
+
