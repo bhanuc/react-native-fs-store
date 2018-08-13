@@ -2,12 +2,12 @@ const RNFS = require('react-native-fs');
 const merge = require('lodash.merge');
 
 class Store {
-  constructor(name, cache){
+  constructor(name, cache) {
     this.name = name;
     this.cache = cache;
     this.fileName = `${RNFS.DocumentDirectoryPath}/${this.name}.rnjs`;
   }
-  async init(){
+  async init() {
     try {
       const file = await RNFS.exists(this.fileName);
       if (file) {
@@ -95,7 +95,7 @@ class Store {
       const items = JSON.parse(file);
       pairs.forEach(pair => {
         if (Array.isArray(pair) && pair.length > 1) {
-            items[pair[0]] = pair[1];
+          items[pair[0]] = pair[1];
         }
       });
       return RNFS.writeFile(this.fileName, JSON.stringify(items));
@@ -130,7 +130,7 @@ class Store {
       const items = JSON.parse(file);
       pairs.forEach(pair => {
         if (Array.isArray(pair) && pair.length > 1) {
-            items[pair[0]] = merge(items[pair[0]], pair[1]);
+          items[pair[0]] = merge(items[pair[0]], pair[1]);
         }
       });
       return RNFS.writeFile(this.fileName, JSON.stringify(items));

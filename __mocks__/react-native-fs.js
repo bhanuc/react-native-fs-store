@@ -2,14 +2,16 @@
 'use strict';
 
 const fs = {};
-
-fs.readFile = () => {
-    return Promise.resolve('{"testItem" : {"test": "value"}}');
+let tmpCache = {};
+fs.readFile = (filename) => {
+    const file = tmpCache[filename] || '{}';
+    return Promise.resolve(file);
 };
-fs.writeFile = () => {
-    return Promise.resolve('{"test": "value"}');
+fs.writeFile = (filename, value) => {
+    tmpCache[filename] = value;
+    return Promise.resolve();
 };
-fs.exists = () => {
+fs.exists = (filename) => {
     return Promise.resolve(true);
 };
 
