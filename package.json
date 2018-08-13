@@ -1,7 +1,7 @@
 {
   "name": "react-native-fs-store",
-  "description": "FS Based store implementation for react native",
-  "version": "0.0.2",
+  "description": "FileSystem Based store implementation for react native",
+  "version": "0.0.3",
   "author": "Bhanu P Chaudhary",
   "bugs": {
     "url": "https://github.com/bhanuc/react-native-fs-store/issues"
@@ -26,5 +26,8 @@
   },
   "scripts": {
     "test": "jest"
+  },
+  "dependencies": {
+    "lodash.merge": "^4.6.1"
   }
 }
