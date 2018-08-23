@@ -1,5 +1,5 @@
 # react-native-fs-store
-React Native FS Based store
+React Native FS Based store, alternative to Asyncstorage with fallbacks.
 
 # Benefits
 - Stores data in FileSystem, no more stuck promises in development
@@ -67,6 +67,7 @@ multiGet
 multiSet
 multiRemove
 multiMerge
+flushGetRequests *
 ```
 
 
@@ -79,4 +80,5 @@ Relevant Issue link- https://github.com/facebook/react-native/issues/12830
 
 # What are the limitations.
 Simulataneous operations are not yet supported, you should use multi- methods for the time being.This module works for me as our android app work fine with eventual consistency in development mode.
+* Note flushGetRequests is a dummy method which doesn't actually do anything but was added so that the library doesn't break if the method is referenced. 
 

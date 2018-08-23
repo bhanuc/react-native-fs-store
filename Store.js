@@ -24,6 +24,10 @@ class Store {
     }
   }
 
+  flushGetRequests(){
+    return true;
+  }
+
   async getItem(key) {
     await this.init();
     try {
