@@ -1,7 +1,7 @@
 {
   "name": "react-native-fs-store",
   "description": "FileSystem Based store implementation for react native",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "author": "Bhanu P Chaudhary",
   "bugs": {
     "url": "https://github.com/bhanuc/react-native-fs-store/issues"
