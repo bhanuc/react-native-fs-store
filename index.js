@@ -1,7 +1,7 @@
-const path = require('path');
+import Store from './Store.js';
 
 const store = !__DEV__ ?
     require('react-native').AsyncStorage :
-    new require(path.join(__dirname, '/Store.js'))('default');
+    new Store('default');
 
 export default store;
