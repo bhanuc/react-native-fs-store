@@ -1,9 +1,15 @@
 # react-native-fs-store
 React Native FS Based store, alternative to Asyncstorage with fallbacks.
 
+[Releted Article] - (https://bhanu.io/react-native-asyncstorage-filesystem-based-alternative-4316aea3e11b)
+
 # Benefits
 - Stores data in FileSystem, no more stuck promises in development
-- API similar to asyncStorage, drop-in replacement.
+- API same as that to asyncStorage, drop-in replacement.
+
+#Cons
+- Slower than AsyncStorage, as each operation is synced to file.
+- Not reliable for parallel operations, should use bulk-update. 
 
 # Installation process
 
@@ -38,7 +44,7 @@ import Store from "react-native-fs-store";
 const AsyncStorage = new Store('default');
 ```
 
-# Change the store to AsyncStorage in production & use the fs fallback in development (0.1.x onwards only)
+# To Change the store to AsyncStorage in production & use the fs fallback in development (0.1.x onwards only)
 
 ```
 import AsyncStorage from "react-native-fs-store/index";
@@ -74,11 +80,10 @@ flushGetRequests *
 
 # Why is this needed ?
 Well the need of the package comes from the current state of async-storage, which sometimes break in development mode only, there are no known fixes for the same, hence I wrote a simple fs based key store system.
-This can be also be used to store encrypted contents.
-Relevant Issue link- https://github.com/facebook/react-native/issues/12830
+[Relevant Issue link](https://github.com/facebook/react-native/issues/12830) 
 
 
 # What are the limitations.
-Simulataneous operations are not yet supported, you should use multi- methods for the time being.This module works for me as our android app work fine with eventual consistency in development mode.
-* Note flushGetRequests is a dummy method which doesn't actually do anything but was added so that the library doesn't break if the method is referenced. 
+Simulatenous Parallel operations are not reliable, you should use multi- methods for the time being.
+* Note flushGetRequests is a dummy method which doesn't actually do anything but was added so that the library doesn't break if the method is referenced in development. 
 
