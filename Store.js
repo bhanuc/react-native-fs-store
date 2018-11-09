@@ -1,6 +1,11 @@
 const RNFS = require('react-native-fs');
 const merge = require('lodash.merge');
 
+const errUtil = (error, msg) => {
+  error.message = `${msg} ${error.message}`;
+  return error;
+};
+
 class Store {
   constructor(name) {
     this.name = name;
@@ -20,7 +25,7 @@ class Store {
       this.initDone = true;
       return RNFS.writeFile(this.fileName, '{}');
     } catch (error) {
-      console.log('error in init', error);
+      throw errUtil(error, 'error in init');
     }
   }
 
@@ -35,7 +40,7 @@ class Store {
       const items = JSON.parse(file);
       return items[key];
     } catch (error) {
-      console.log('error in getItem', error);
+      throw errUtil(error, 'error in getItem');
     }
   }
   async setItem(key, value) {
@@ -46,7 +51,7 @@ class Store {
       items[key] = value;
       return RNFS.writeFile(this.fileName, JSON.stringify(items));
     } catch (error) {
-      console.log('error in getItem', error);
+      throw errUtil(error, 'error in setItem');
     }
   }
   async removeItem(key) {
@@ -57,7 +62,7 @@ class Store {
       delete items[key];
       return RNFS.writeFile(this.fileName, JSON.stringify(items));
     } catch (error) {
-      console.log('error in removeItem', error);
+      throw errUtil(error, 'error in removeItem');
     }
   }
   async mergeItem(key, value) {
@@ -68,7 +73,7 @@ class Store {
       items[key] = merge(items[key], value);
       return RNFS.writeFile(this.fileName, JSON.stringify(items));
     } catch (error) {
-      console.log('error in mergeItem', error);
+      throw errUtil(error, 'error in mergeItem');
     }
   }
   async clear() {
@@ -76,14 +81,13 @@ class Store {
     try {
       return RNFS.writeFile(this.fileName, '{}');
     } catch (error) {
-      console.log('error in clear', error);
+      throw errUtil(error, 'error in clear');      
     }
   }
   async multiGet(keys, cb) {
     await this.init();
     if (!Array.isArray(keys)) {
-      console.log('input to multiGet is not an array.');
-      return;
+      throw new Error('input to multiGet is not an array.');
     }
     try {
       const file = await RNFS.readFile(this.fileName);
@@ -94,17 +98,16 @@ class Store {
       }
       return output;
     } catch (error) {
-      console.log('error in multiGet', error);
       if (cb && typeof cb === 'function') {
         cb(error);
       }
+      throw errUtil(error, 'error in multiGet');      
     }
   }
   async multiSet(pairs) {
     await this.init();
     if (!Array.isArray(pairs)) {
-      console.log('input to multiGet is not an array.');
-      return;
+      throw new Error('input to multiSet is not an array.');
     }
     try {
       const file = await RNFS.readFile(this.fileName);
@@ -116,15 +119,14 @@ class Store {
       });
       return RNFS.writeFile(this.fileName, JSON.stringify(items));
     } catch (error) {
-      console.log('error in multiSet', error);
+      throw errUtil(error, 'error in multiSet');      
     }
   }
 
   async multiRemove(keys) {
     await this.init();
     if (!Array.isArray(keys)) {
-      console.log('input to multiGet is not an array.');
-      return;
+      throw new Error('input to multiRemove is not an array.');
     }
     try {
       const file = await RNFS.readFile(this.fileName);
@@ -134,14 +136,13 @@ class Store {
       });
       return RNFS.writeFile(this.fileName, JSON.stringify(items));
     } catch (error) {
-      console.log('error in multiRemove', error);
+      throw errUtil(error, 'error in multiRemove');
     }
   }
   async multiMerge(pairs) {
     await this.init();
     if (!Array.isArray(pairs)) {
-      console.log('input to multiGet is not an array.');
-      return;
+      throw new Error('input to multiMerge is not an array.');
     }
     try {
       const file = await RNFS.readFile(this.fileName);
@@ -153,7 +154,7 @@ class Store {
       });
       return RNFS.writeFile(this.fileName, JSON.stringify(items));
     } catch (error) {
-      console.log('error in multiSet', error);
+      throw errUtil(error, 'error in multiMerge');      
     }
   }
 }
