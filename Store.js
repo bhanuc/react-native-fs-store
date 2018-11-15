@@ -104,6 +104,23 @@ class Store {
       throw errUtil(error, 'error in multiGet');      
     }
   }
+  async getAllKeys(cb) {
+    await this.init();
+    try {
+      const file = await RNFS.readFile(this.fileName);
+      const items = JSON.parse(file);
+      const output = Object.keys(items);
+      if (cb && typeof cb === 'function') {
+        return cb(null, output)
+      }
+      return output;
+    } catch (error) {
+      if (cb && typeof cb === 'function') {
+        cb(error);
+      }
+      throw errUtil(error, 'error in multiGet');      
+    }
+  }
   async multiSet(pairs) {
     await this.init();
     if (!Array.isArray(pairs)) {
